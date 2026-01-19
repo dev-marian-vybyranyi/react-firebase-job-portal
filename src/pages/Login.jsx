@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Form, Input } from "antd";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -13,10 +13,10 @@ const Login = () => {
         <div className="divider"></div>
         <Form layout="vertical ">
           <Form.Item name="email" label="Email">
-            <input type="text" />
+            <Input type="text" />
           </Form.Item>
           <Form.Item name="password" label="Password">
-            <input type="password" />
+            <Input type="password" />
           </Form.Item>
           <button className="primary-contained-btn w-100 mt-2">Login</button>
           <Link to="/register" className="d-block mt-2">
