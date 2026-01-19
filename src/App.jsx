@@ -1,13 +1,18 @@
+import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Loader from "./components/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Register from "./pages/Register ";
+import "./stylesheets/custom-components.css";
 
 function App() {
+  const { loading } = useSelector((state) => state.alert);
   return (
     <>
+      {loading && <Loader />}
       <BrowserRouter>
         <Routes>
           <Route
