@@ -7,6 +7,8 @@ import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PostedJobs from "./pages/user/postedjobs";
+import NewEditJob from "./pages/user/postedjobs/NewEditJob";
 import Profile from "./pages/user/profile";
 import "./stylesheets/custom-components.css";
 import "./stylesheets/layout.css";
@@ -55,6 +57,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posted-jobs"
+            element={
+              <ProtectedRoute>
+                <PostedJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posted-jobs/new"
+            element={
+              <ProtectedRoute>
+                <NewEditJob />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/posted-jobs/edit/:id"
+            element={
+              <ProtectedRoute>
+                <NewEditJob />
               </ProtectedRoute>
             }
           />
