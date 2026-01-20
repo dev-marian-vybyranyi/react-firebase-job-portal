@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -89,6 +90,21 @@ export const getJobById = async (id) => {
         message: "No such job!",
       };
     }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const deleteJobById = async (id) => {
+  try {
+    await deleteDoc(doc(fireDB, "jobs", id));
+    return {
+      success: true,
+      message: "Job deleted successfully",
+    };
   } catch (error) {
     return {
       success: false,
