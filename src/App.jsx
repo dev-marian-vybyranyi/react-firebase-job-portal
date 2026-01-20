@@ -12,6 +12,7 @@ import NewEditJob from "./pages/user/postedjobs/NewEditJob";
 import Profile from "./pages/user/profile";
 import "./stylesheets/custom-components.css";
 import "./stylesheets/layout.css";
+import AllJobs from "./pages/admin/AllJobs";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -84,6 +85,22 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/jobs"
+            element={
+              <ProtectedRoute>
+                <AllJobs />
+              </ProtectedRoute>
+            }
+          />
+          {/* <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <Allusers />
+              </ProtectedRoute>
+            }
+          /> */}
         </Routes>
       </BrowserRouter>
     </>

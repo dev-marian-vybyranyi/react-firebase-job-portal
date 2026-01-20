@@ -8,9 +8,10 @@ import {
   orderBy,
   query,
   updateDoc,
+  where,
 } from "firebase/firestore";
-import { fireDB } from "../firebaseConfig";
 import moment from "moment";
+import { fireDB } from "../firebaseConfig";
 
 export const addNewJobPost = async (payload) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -106,6 +107,71 @@ export const deleteJobById = async (id) => {
       message: "Job deleted successfully",
     };
   } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const getAllJobs = async (filters) => {
+  try {
+    let whereConditions = [];
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        if (filters[key]) {
+          whereConditions.push(where(key, "==", filters[key]));
+        }
+      });
+    }
+    console.log(filters);
+    const jobs = [];
+    const qry = query(collection(fireDB, "jobs"), ...whereConditions);
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      jobs.push({ id: doc.id, ...doc.data() });
+    });
+    const sortedPosts = jobs.sort((a, b) => {
+      return moment(b.postedOn, "DD-MM-YYYY HH:mm:ss").diff(
+        moment(a.postedOn, "DD-MM-YYYY HH:mm:ss"),
+      );
+    });
+    return {
+      success: true,
+      data: sortedPosts,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
+
+export const changeJobStatusFromAdmin = async (payload) => {
+  try {
+    console.log(payload);
+    await updateDoc(doc(fireDB, "jobs", payload.id), {
+      ...payload,
+      updatedOn: moment().format("DD-MM-YYYY HH:mm A"),
+    });
+
+    await addDoc(
+      collection(fireDB, "users", payload.postedByUserId, "notifications"),
+      {
+        title: `Your job post request for ${payload.title} has been ${payload.status}`,
+        onClick: `/posted-jobs`,
+        createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+        status: "unread",
+      }
+    );
+    return {
+      success: true,
+      message: "Job updated successfully",
+    };
+  } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "Something went wrong",
