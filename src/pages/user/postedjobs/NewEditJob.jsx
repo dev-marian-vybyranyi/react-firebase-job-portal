@@ -1,14 +1,39 @@
 import { Col, Form, message, Row } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { addNewJobPost } from "../../../apis/jobs";
+import { addNewJobPost, editJobDetails, getJobById } from "../../../apis/jobs";
 import PageTitle from "../../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../../redux/alertSlice";
+import { useEffect, useState } from "react";
 
 const NewEditJob = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [jobData, setJobData] = useState(null);
+
+  const getData = async () => {
+    try {
+      dispatch(ShowLoading());
+      const response = await getJobById(params.id);
+      dispatch(HideLoading());
+      if (response.success) {
+        setJobData(response.data);
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (params.id) {
+      getData();
+    } else {
+      setJobData({});
+    }
+  }, []);
 
   const onFinish = async (values) => {
     try {
@@ -38,21 +63,11 @@ const NewEditJob = () => {
   return (
     <div>
       <PageTitle title={params.id ? "Edit Job" : "Add New Post"} />
+      {jobData && (
       <Form
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{
-          title: "",
-          industry: "",
-          location: "",
-          company: "",
-          salary: "",
-          jobType: "",
-          lastDateToApply: "",
-          experience: "",
-          noticePeriod: "",
-          jobDescription: "",
-        }}
+        initialValues={jobData}
       >
         <Row gutter={[10, 10]}>
           <Col span={12}>
@@ -178,6 +193,7 @@ const NewEditJob = () => {
           </button>
         </div>
       </Form>
+      )}
     </div>
   );
 };
