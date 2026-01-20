@@ -7,6 +7,7 @@ import AllJobs from "./pages/admin/AllJobs";
 import AllUsers from "./pages/admin/AllUsers";
 import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
+import JobDescription from "./pages/JobDescription";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PostedJobs from "./pages/user/postedjobs";
@@ -99,6 +100,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AllUsers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/job-description/:id"
+            element={
+              <ProtectedRoute>
+                <JobDescription />
               </ProtectedRoute>
             }
           />
