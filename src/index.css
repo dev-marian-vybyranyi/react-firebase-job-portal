@@ -21,11 +21,11 @@
 }
 
 input,
+select,
 textarea {
   border: 1px solid gray !important;
-  height: 40px !important;
   width: 100% !important;
-  padding-left: 20px !important;
+  padding: 8px 20px;
 }
 
 input:focus,
@@ -35,15 +35,27 @@ textarea:focus {
 }
 
 textarea {
-  min-height: 8dvb !important;
+  min-height: 60px !important;
+  max-height: 1000px !important;
 }
 
 .primary-contained-btn {
   background-color: #171717 !important;
   border-radius: 0 !important;
-  height: 45px !important;
-  color: #fff !important;
+  height: 40px;
+  color: white !important;
   text-transform: uppercase !important;
+  padding: 0 20px;
+}
+
+.primary-outlined-btn {
+  border: 1px solid #171717 !important;
+  border-radius: 0 !important;
+  height: 40px;
+  color: #171717 !important;
+  text-transform: uppercase !important;
+  background-color: white !important;
+  padding: 0 20px !important;
 }
 
 .ant-form-item {
@@ -56,14 +68,8 @@ a {
 }
 
 .divider {
-  border-bottom: 1px solid gray !important;
-  margin: 8px 0 !important;
-}
-
-.loader-parent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-bottom: 1px solid gray;
+  margin: 8px 0;
 }
 
 h1,
