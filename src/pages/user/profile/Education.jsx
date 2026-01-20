@@ -7,7 +7,7 @@ function Education() {
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Row gutter={[10, 10]} align="middle">
+              <Row key={key} gutter={[10, 10]} align="middle">
                 <Col span={8}>
                   <Form.Item
                     {...restField}
@@ -38,7 +38,10 @@ function Education() {
                     <input type="text" />
                   </Form.Item>
                 </Col>
-                <i class="ri-delete-bin-line" onClick={() => remove(name)}></i>
+                <i
+                  className="ri-delete-bin-line"
+                  onClick={() => remove(name)}
+                ></i>
               </Row>
             ))}
             <Form.Item>
@@ -54,7 +57,7 @@ function Education() {
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Row gutter={[10, 10]} align="middle">
+              <Row key={key} gutter={[10, 10]} align="middle">
                 <Col span={8}>
                   <Form.Item
                     {...restField}
@@ -76,7 +79,10 @@ function Education() {
                   </Form.Item>
                 </Col>
 
-                <i class="ri-delete-bin-line" onClick={() => remove(name)}></i>
+                <i
+                  className="ri-delete-bin-line"
+                  onClick={() => remove(name)}
+                ></i>
               </Row>
             ))}
             <Form.Item>

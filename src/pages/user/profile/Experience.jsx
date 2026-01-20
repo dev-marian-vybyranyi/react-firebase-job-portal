@@ -1,13 +1,13 @@
 import { Col, Form, Row } from "antd";
 
-function Experince() {
+function Experience() {
   return (
     <>
       <Form.List name="experinces">
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Row gutter={[10, 10]} align="middle">
+              <Row key={key} gutter={[10, 10]} align="middle">
                 <Col span={8}>
                   <Form.Item
                     {...restField}
@@ -48,7 +48,10 @@ function Experince() {
                     <input type="text" />
                   </Form.Item>
                 </Col>
-                <i class="ri-delete-bin-line" onClick={() => remove(name)}></i>
+                <i
+                  className="ri-delete-bin-line"
+                  onClick={() => remove(name)}
+                ></i>
               </Row>
             ))}
             <Form.Item>
@@ -64,7 +67,7 @@ function Experince() {
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Row gutter={[10, 10]} align="middle">
+              <Row key={key} gutter={[10, 10]} align="middle">
                 <Col span={8}>
                   <Form.Item
                     {...restField}
@@ -96,7 +99,10 @@ function Experince() {
                   </Form.Item>
                 </Col>
 
-                <i class="ri-delete-bin-line" onClick={() => remove(name)}></i>
+                <i
+                  className="ri-delete-bin-line"
+                  onClick={() => remove(name)}
+                ></i>
               </Row>
             ))}
             <Form.Item>
@@ -111,4 +117,4 @@ function Experince() {
   );
 }
 
-export default Experince;
+export default Experience;

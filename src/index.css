@@ -41,6 +41,7 @@ textarea {
 
 .primary-contained-btn {
   background-color: #171717 !important;
+  border: none !important;
   border-radius: 0 !important;
   height: 40px;
   color: white !important;
