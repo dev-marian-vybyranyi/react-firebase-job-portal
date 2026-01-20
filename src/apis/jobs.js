@@ -277,3 +277,23 @@ export const changeApplicationStatus = async (payload) => {
     };
   }
 };
+
+export const getAllApplications = async () => {
+  try {
+    const applications = [];
+    const qry = query(collection(fireDB, "applications"));
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      applications.push({ id: doc.id, ...doc.data() });
+    });
+    return {
+      success: true,
+      data: applications,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};

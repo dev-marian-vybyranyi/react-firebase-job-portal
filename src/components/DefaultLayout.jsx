@@ -6,10 +6,9 @@ import { HideLoading, ShowLoading } from "../redux/alertSlice";
 
 function DefaultLayout({ children }) {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [collapsed, setCollapsed] = useState(false);
-  const [menuToRender, setMenuToRender] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const userMenu = [
     {
       title: "Home",
@@ -82,6 +81,9 @@ function DefaultLayout({ children }) {
     },
   ];
 
+  const [collapsed, setCollapsed] = useState(false);
+  const [menuToRender, setMenuToRender] = useState(userMenu);
+
   const getData = async () => {
     try {
       dispatch(ShowLoading());
@@ -153,6 +155,6 @@ function DefaultLayout({ children }) {
       </div>
     </div>
   );
-};
+}
 
 export default DefaultLayout;
