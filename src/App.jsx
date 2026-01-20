@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -37,6 +38,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/applied-jobs"
+            element={
+              <ProtectedRoute>
+                <AppliedJobs />
               </ProtectedRoute>
             }
           />
