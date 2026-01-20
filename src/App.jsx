@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loader from "./components/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import AllJobs from "./pages/admin/AllJobs";
+import AllUsers from "./pages/admin/AllUsers";
 import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -12,7 +14,6 @@ import NewEditJob from "./pages/user/postedjobs/NewEditJob";
 import Profile from "./pages/user/profile";
 import "./stylesheets/custom-components.css";
 import "./stylesheets/layout.css";
-import AllJobs from "./pages/admin/AllJobs";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -93,14 +94,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* <Route
+          <Route
             path="/admin/users"
             element={
               <ProtectedRoute>
-                <Allusers />
+                <AllUsers />
               </ProtectedRoute>
             }
-          /> */}
+          />
         </Routes>
       </BrowserRouter>
     </>

@@ -154,7 +154,7 @@ export const changeJobStatusFromAdmin = async (payload) => {
     console.log(payload);
     await updateDoc(doc(fireDB, "jobs", payload.id), {
       ...payload,
-      updatedOn: moment().format("DD-MM-YYYY HH:mm A"),
+      updatedOn: moment().format("DD-MM-YYYY HH:mm:ss"),
     });
 
     await addDoc(
@@ -162,7 +162,7 @@ export const changeJobStatusFromAdmin = async (payload) => {
       {
         title: `Your job post request for ${payload.title} has been ${payload.status}`,
         onClick: `/posted-jobs`,
-        createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+        createdAt: moment().format("DD-MM-YYYY HH:mm:ss"),
         status: "unread",
       }
     );
