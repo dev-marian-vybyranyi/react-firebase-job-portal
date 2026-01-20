@@ -1,13 +1,38 @@
-import { Col, Form, Row } from "antd";
+import { Col, Form, message, Row } from "antd";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { addNewJobPost } from "../../../apis/jobs";
 import PageTitle from "../../../components/PageTitle";
+import { HideLoading, ShowLoading } from "../../../redux/alertSlice";
 
 const NewEditJob = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const onFinish = (values) => {
-    console.log(values);
+
+  const onFinish = async (values) => {
+    try {
+      dispatch(ShowLoading());
+      let response = null;
+      if (params.id) {
+        response = await editJobDetails({
+          ...values,
+          id: params.id,
+        });
+      } else {
+        response = await addNewJobPost(values);
+      }
+      if (response.success) {
+        message.success(response.message);
+        navigate("/posted-jobs");
+      } else {
+        message.error(response.message);
+      }
+      dispatch(HideLoading());
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
   };
 
   return (
