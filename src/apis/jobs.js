@@ -263,7 +263,7 @@ export const changeApplicationStatus = async (payload) => {
       title: `Your application for ${payload.jobTitle} in ${payload.company} is ${payload.status}`,
       onClick: `/applied-jobs`,
       status: "unread",
-      createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+      createdAt: moment().format("DD-MM-YYYY HH:mm:ss"),
     });
     return {
       success: true,

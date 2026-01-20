@@ -1,11 +1,18 @@
+import { Badge } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserProfile } from "../apis/users";
+import { getUserNofications, getUserProfile } from "../apis/users";
 import { HideLoading, ShowLoading } from "../redux/alertSlice";
+import { SetReloadNotifications } from "../redux/notifications";
 
 function DefaultLayout({ children }) {
   const user = JSON.parse(localStorage.getItem("user"));
+  const { reloadNotifications, unreadNotifications } = useSelector(
+    (state) => state.notifications,
+  );
+  const [collapsed, setCollapsed] = useState(false);
+  const [menuToRender, setMenuToRender] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,7 +37,7 @@ function DefaultLayout({ children }) {
     },
     {
       title: "Profile",
-      onClick: () => navigate(`/profile`),
+      onClick: () => navigate(`/profile/${user.id}`),
       icon: <i className="ri-user-2-line"></i>,
       path: "/profile",
     },
@@ -52,12 +59,7 @@ function DefaultLayout({ children }) {
       icon: <i className="ri-home-7-line"></i>,
       path: "/",
     },
-    {
-      title: "Applications",
-      onClick: () => navigate("/admin/applications"),
-      icon: <i className="ri-file-list-3-line"></i>,
-      path: "/admin/applications",
-    },
+
     {
       title: "Jobs",
       onClick: () => navigate("/admin/jobs"),
@@ -81,9 +83,6 @@ function DefaultLayout({ children }) {
     },
   ];
 
-  const [collapsed, setCollapsed] = useState(false);
-  const [menuToRender, setMenuToRender] = useState(userMenu);
-
   const getData = async () => {
     try {
       dispatch(ShowLoading());
@@ -101,9 +100,26 @@ function DefaultLayout({ children }) {
     }
   };
 
+  const loadNotifications = async () => {
+    try {
+      dispatch(ShowLoading());
+      await getUserNofications();
+      dispatch(HideLoading());
+      dispatch(SetReloadNotifications(false));
+    } catch (error) {
+      dispatch(HideLoading());
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    if (reloadNotifications) {
+      loadNotifications();
+    }
+  }, [reloadNotifications]);
 
   return (
     <div className="layout">
@@ -147,6 +163,14 @@ function DefaultLayout({ children }) {
             <span className="logo">Job Portal</span>
           </div>
           <div className="d-flex gap-1 align-items-center">
+            <Badge
+              count={unreadNotifications?.length || 0}
+              className="mx-5"
+              onClick={() => navigate("/notifications")}
+            >
+              <i className="ri-notification-line"></i>
+            </Badge>
+
             <span>{user?.name}</span>
             <i className="ri-shield-user-line"></i>
           </div>

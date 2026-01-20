@@ -9,6 +9,7 @@ import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
 import JobDescription from "./pages/JobDescription";
 import Login from "./pages/Login";
+import Notifications from "./pages/Notifications";
 import Register from "./pages/Register";
 import PostedJobs from "./pages/user/postedjobs";
 import NewEditJob from "./pages/user/postedjobs/NewEditJob";
@@ -108,6 +109,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <JobDescription />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
               </ProtectedRoute>
             }
           />
