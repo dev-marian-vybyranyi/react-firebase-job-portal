@@ -7,6 +7,7 @@ import AppliedJobs from "./pages/AppliedJobs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/user/profile";
 import "./stylesheets/custom-components.css";
 import "./stylesheets/layout.css";
 
@@ -46,6 +47,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AppliedJobs />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

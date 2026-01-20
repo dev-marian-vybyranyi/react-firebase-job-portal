@@ -27,7 +27,7 @@ const DefaultLayout = ({ children }) => {
     },
     {
       title: "Profile",
-      onClick: () => navigate(`/profile/${user.id}`),
+      onClick: () => navigate(`/profile`),
       icon: <i className="ri-user-2-line"></i>,
       path: "/profile",
     },
