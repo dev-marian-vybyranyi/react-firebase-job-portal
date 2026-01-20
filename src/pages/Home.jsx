@@ -3,13 +3,18 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllJobs } from "../apis/jobs";
-import PageTitle from "../components/PageTitle";
+import Filters from "../components/Filters";
 import { HideLoading, ShowLoading } from "../redux/alertSlice";
 
 function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    location: "",
+    industry: "",
+    experience: "",
+  });
 
   const getData = async () => {
     try {
@@ -33,14 +38,13 @@ function Home() {
   }, []);
   return (
     <div>
-      <PageTitle title="Home" />
+      <Filters filters={filters} setFilters={setFilters} setData={setData} />
       <Row gutter={[15, 15]} className="mt-3">
         {data.map((job) => (
-          <Col key={job.id} span={8}>
+          <Col span={8}>
             <div className="job-card">
               <h3 className="uppercase">{job.title}</h3>
               <div className="light-divider"></div>
-
               <div className="d-flex flex-column gap-1">
                 <div className="d-flex justify-content-between mt-1">
                   <span>Company</span>
