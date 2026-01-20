@@ -1,4 +1,4 @@
-import { Tabs } from "antd";
+import { Form, Tabs } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import PageTitle from "../../../components/PageTitle";
 import Education from "./Education";
@@ -9,17 +9,19 @@ const Profile = () => {
   return (
     <div>
       <PageTitle title="Profile" />
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Personal Info" key="1">
-          <PersonalInfo />
-        </TabPane>
-        <TabPane tab="Education" key="2">
-          <Education />
-        </TabPane>
-        <TabPane tab="Experience" key="3">
-          <Experince />
-        </TabPane>
-      </Tabs>
+      <Form layout="vertical">
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Personal Info" key="1">
+            <PersonalInfo />
+          </TabPane>
+          <TabPane tab="Education" key="2">
+            <Education />
+          </TabPane>
+          <TabPane tab="Experience" key="3">
+            <Experince />
+          </TabPane>
+        </Tabs>
+      </Form>
     </div>
   );
 };
