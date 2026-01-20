@@ -96,7 +96,7 @@ function AppliedCandidates({
     <div>
       <Modal
         title="Applied Candidates"
-        visible={showAppliedCandidates}
+        open={showAppliedCandidates}
         onCancel={() => setShowAppliedCandidates(false)}
         footer={null}
         width={1000}
