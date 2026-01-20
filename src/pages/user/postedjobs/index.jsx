@@ -1,16 +1,22 @@
 import { message, Table } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteJobById, getPostedJobsByUserId } from "../../../apis/jobs";
+import {
+  deleteJobById,
+  getApplicationsByJobId,
+  getPostedJobsByUserId,
+} from "../../../apis/jobs";
 import PageTitle from "../../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../../redux/alertSlice";
+import AppliedCandidates from "./AppliedCandidates";
 
-const PostedJobs = () => {
+function PostedJobs() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-
+  const [showAppliedCandidates, setShowAppliedCandidates] = useState(false);
+  const [appiledCandidates, setAppiledCandidates] = useState([]);
   const getData = async () => {
     try {
       dispatch(ShowLoading());
@@ -32,10 +38,25 @@ const PostedJobs = () => {
 
       const response = await deleteJobById(id);
       if (response.success) {
-        message.success(response.message);
+        setData(response.data);
         getData();
-      } else {
-        message.error(response.message);
+      }
+      dispatch(HideLoading());
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
+
+  const getAppliedCandidates = async (id) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await getApplicationsByJobId(id);
+      if (response.success) {
+        setAppiledCandidates(response.data);
+        if (!showAppliedCandidates) {
+          setShowAppliedCandidates(true);
+        }
       }
       dispatch(HideLoading());
     } catch (error) {
@@ -70,6 +91,12 @@ const PostedJobs = () => {
       dataIndex: "action",
       render: (text, record) => (
         <div className="d-flex gap-3 align-items-center">
+          <span
+            className="underline"
+            onClick={() => getAppliedCandidates(record.id)}
+          >
+            candidates
+          </span>
           <i
             className="ri-delete-bin-line"
             onClick={() => deleteJob(record.id)}
@@ -98,7 +125,17 @@ const PostedJobs = () => {
           New Job
         </button>
       </div>
-      <Table columns={columns} dataSource={data} rowKey="id" />
+
+      <Table columns={columns} dataSource={data} rowKey={"id"}/>
+
+      {showAppliedCandidates && (
+        <AppliedCandidates
+          showAppliedCandidates={showAppliedCandidates}
+          setShowAppliedCandidates={setShowAppliedCandidates}
+          appiledCandidates={appiledCandidates}
+          reloadData={getAppliedCandidates}
+        />
+      )}
     </div>
   );
 };

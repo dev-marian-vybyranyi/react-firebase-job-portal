@@ -252,3 +252,28 @@ export const getApplicationsByJobId = async (jobId) => {
     };
   }
 };
+
+export const changeApplicationStatus = async (payload) => {
+  try {
+    await updateDoc(doc(fireDB, "applications", payload.id), {
+      status: payload.status,
+    });
+
+    await addDoc(collection(fireDB, `users/${payload.userId}/notifications`), {
+      title: `Your application for ${payload.jobTitle} in ${payload.company} is ${payload.status}`,
+      onClick: `/applied-jobs`,
+      status: "unread",
+      createdAt: moment().format("DD-MM-YYYY HH:mm A"),
+    });
+    return {
+      success: true,
+      message: "Application status updated successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  }
+};
