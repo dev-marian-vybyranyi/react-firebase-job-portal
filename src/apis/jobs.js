@@ -1,4 +1,10 @@
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { fireDB } from "../firebaseConfig";
 import moment from "moment";
 
@@ -20,6 +26,28 @@ export const addNewJobPost = async (payload) => {
     return {
       success: false,
       message: error.message,
+    };
+  }
+};
+
+export const getPostedJobsByUserId = async (userId) => {
+  try {
+    const jobs = [];
+    const qry = query(collection(fireDB, "jobs"), orderBy("postedOn", "desc"));
+    const querySnapshot = await getDocs(qry);
+    querySnapshot.forEach((doc) => {
+      if (doc.data().postedByUserId === userId) {
+        jobs.push({ id: doc.id, ...doc.data() });
+      }
+    });
+    return {
+      success: true,
+      data: jobs,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong",
     };
   }
 };
